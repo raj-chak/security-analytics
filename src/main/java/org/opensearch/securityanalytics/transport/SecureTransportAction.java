@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * 1. If filterBy is enabled
  *      a) Don't allow to create detector (throw error) if the logged-on user has no backend roles configured.
  *
- * 2. If filterBy is enabled & detector are created when filterBy is disabled:
+ * 2. If filterBy is enabled and detector are created when filterBy is disabled:
  *      a) If backend_roles are saved with config, results will get filtered and data is shown
  *      b) If backend_roles are not saved with detector config, results will get filtered and no detectors
  *         will be displayed.
