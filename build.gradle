@@ -172,6 +172,7 @@ integTest {
     if (System.getProperty("https") == null || System.getProperty("https") == "false") {
         filter {
             excludeTestsMatching "org.opensearch.securityanalytics.resthandler.Secure*RestApiIT"
+            excludeTestsMatching "org.opensearch.securityanalytics.findings.Secure*RestApiIT"
         }
     }
 
