@@ -23,10 +23,26 @@ import org.opensearch.index.query.MatchQueryBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * TransportAction classes extend this interface to add filter-by-backend-roles functionality.
+ *
+ * 1. If filterBy is enabled
+ *      a) Don't allow to create detector (throw error) if the logged-on user has no backend roles configured.
+ *
+ * 2. If filterBy is enabled & detector are created when filterBy is disabled:
+ *      a) If backend_roles are saved with config, results will get filtered and data is shown
+ *      b) If backend_roles are not saved with detector config, results will get filtered and no detectors
+ *         will be displayed.
+ *      c) Users can edit and save the detector to associate their backend_roles.
+ *
+ */
 public interface SecureTransportAction {
 
     static final Logger log = LogManager.getLogger(SecureTransportAction.class);
 
+    /**
+     *  reads the user from the thread context that is later used to serialize and save in config
+     */
     default User readUserFromThreadContext(ThreadPool threadPool) {
         String userStr = threadPool.getThreadContext().getTransient(ConfigConstants.OPENSEARCH_SECURITY_USER_INFO_THREAD_CONTEXT);
         log.info("User and roles string from thread context: {}", userStr);
@@ -87,10 +103,7 @@ public interface SecureTransportAction {
         List<String> resourceBackendRoles = resourceUser.getBackendRoles();
         List<String> requesterBackendRoles = requesterUser.getBackendRoles();
 
-        if (
-                resourceBackendRoles == null ||requesterBackendRoles == null ||
-                        isIntersectListsEmpty(resourceBackendRoles, requesterBackendRoles)
-        ) {
+        if (resourceBackendRoles == null ||requesterBackendRoles == null || isIntersectListsEmpty(resourceBackendRoles, requesterBackendRoles)) {
             return false;
         }
         return true;
