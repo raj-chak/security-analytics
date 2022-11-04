@@ -7,7 +7,6 @@ package org.opensearch.securityanalytics;
 import org.apache.http.HttpHost;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
-import java.io.File;
 import java.nio.file.Path;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -56,15 +55,12 @@ import org.opensearch.securityanalytics.action.UpdateIndexMappingsRequest;
 import org.opensearch.securityanalytics.config.monitors.DetectorMonitorConfig;
 import org.opensearch.securityanalytics.model.Detector;
 import org.opensearch.securityanalytics.model.Rule;
-import org.opensearch.securityanalytics.util.DetectorIndices;
-import org.opensearch.securityanalytics.util.RuleTopicIndices;
 import org.opensearch.test.rest.OpenSearchRestTestCase;
 
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,7 +70,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.opensearch.action.admin.indices.create.CreateIndexRequest.MAPPINGS;
-import static org.opensearch.securityanalytics.util.RuleTopicIndices.ruleTopicIndexMappings;
 import static org.opensearch.securityanalytics.util.RuleTopicIndices.ruleTopicIndexSettings;
 
 public class SecurityAnalyticsRestTestCase extends OpenSearchRestTestCase {
@@ -241,7 +236,7 @@ public class SecurityAnalyticsRestTestCase extends OpenSearchRestTestCase {
                 "      \"query\": {\n" +
                 "        \"bool\": {\n" +
                 "          \"must\": [\n" +
-                "            { \"match\": {\"rule.category\": \"windows\"}}\n" +
+                "            { \"match\": {\"rule.category\": \"" + TestHelpers.randomDetectorType() + "\"}}\n" +
                 "          ]\n" +
                 "        }\n" +
                 "      }\n" +
