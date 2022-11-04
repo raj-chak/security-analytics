@@ -1031,21 +1031,21 @@ public class SecurityAnalyticsRestTestCase extends OpenSearchRestTestCase {
         );
 
 
-            for (Object index : parser.list()) {
-                Map<String, Object>  jsonObject = (Map<String, Object>) index;
+        for (Object index : parser.list()) {
+            Map<String, Object> jsonObject = (Map<String, Object>) index;
 
-                String indexName = jsonObject.get("index").toString();
-                // .opendistro_security isn't allowed to delete from cluster
-                if (!".opendistro_security".equals(indexName)) {
-                    Request request = new Request("DELETE", String.format(Locale.getDefault(), "/%s", indexName));
-                    // TODO: remove PERMISSIVE option after moving system index access to REST API call
-                    RequestOptions.Builder options = RequestOptions.DEFAULT.toBuilder();
-                    options.setWarningsHandler(WarningsHandler.PERMISSIVE);
-                    request.setOptions(options.build());
-                    adminClient().performRequest(request);
-                }
+            String indexName = jsonObject.get("index").toString();
+            // .opendistro_security isn't allowed to delete from cluster
+            if (!".opendistro_security".equals(indexName)) {
+                Request request = new Request("DELETE", String.format(Locale.getDefault(), "/%s", indexName));
+                // TODO: remove PERMISSIVE option after moving system index access to REST API call
+                RequestOptions.Builder options = RequestOptions.DEFAULT.toBuilder();
+                options.setWarningsHandler(WarningsHandler.PERMISSIVE);
+                request.setOptions(options.build());
+                adminClient().performRequest(request);
             }
         }
+    }
 
 
 

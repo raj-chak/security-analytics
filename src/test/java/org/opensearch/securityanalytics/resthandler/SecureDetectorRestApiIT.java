@@ -50,7 +50,7 @@ public class SecureDetectorRestApiIT extends SecurityAnalyticsRestTestCase {
     );
 
     private RestClient userClient;
-    private final String user = "userOne";
+    private final String user = "userDetector";
 
 
     @Before

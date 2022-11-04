@@ -87,7 +87,7 @@ public class TransportGetDetectorAction extends HandledTransportAction<GetDetect
 
         String validateBackendRoleMessage = validateUserBackendRoles(user, this.filterByEnabled);
         if (!"".equals(validateBackendRoleMessage)) {
-            actionListener.onFailure(SecurityAnalyticsException.wrap(new OpenSearchStatusException(validateBackendRoleMessage, RestStatus.FORBIDDEN)));
+            actionListener.onFailure(new OpenSearchStatusException("Do not have permissions to resource", RestStatus.FORBIDDEN));
             return;
         }
 
