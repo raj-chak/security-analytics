@@ -173,6 +173,7 @@ integTest {
         filter {
             excludeTestsMatching "org.opensearch.securityanalytics.resthandler.Secure*RestApiIT"
             excludeTestsMatching "org.opensearch.securityanalytics.findings.Secure*RestApiIT"
+            excludeTestsMatching "org.opensearch.securityanalytics.alerts.Secure*RestApiIT"
         }
     }
 
@@ -321,6 +322,8 @@ task integTestRemote(type: RestIntegTestTask) {
     if (System.getProperty("https") == null || System.getProperty("https") == "false") {
         filter {
             excludeTestsMatching "org.opensearch.securityanalytics.resthandler.Secure*RestApiIT"
+            excludeTestsMatching "org.opensearch.securityanalytics.findings.Secure*RestApiIT"
+            excludeTestsMatching "org.opensearch.securityanalytics.alerts.Secure*RestApiIT"
         }
     }
 }
